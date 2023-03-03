@@ -5,6 +5,9 @@ services:
   app:
     build: 
       context: node
+      dockerfile: Dockerfile
+    image: tmsdkr/node:latest      
+    command: node index.js    
     container_name: app
     entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh
     networks: 
@@ -14,13 +17,15 @@ services:
     tty: true
     ports: 
       - "3000:3000"
-    command: node index.js
     depends_on: 
        - db
 
   db:
-    image: mysql:5.7
+    build: 
+      context: ./
+      dockerfile: db.Dockerfile  
     command: --innodb-use-native-aio=0
+    image: tmsdkr/mysql:latest    
     container_name: db
     restart: always
     tty: true
