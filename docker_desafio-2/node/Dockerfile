@@ -8,8 +8,11 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 COPY package.json ./
+COPY package-lock.json ./
 COPY index.js ./
 
-RUN npm install
+RUN npm install express --save
 
 EXPOSE 3000
+
+CMD ["node", "index.js"]
