@@ -13,6 +13,8 @@ COPY index.js ./
 
 RUN npm install express --save
 
+USER node
+
 EXPOSE 3000
 
 CMD ["node", "index.js"]
