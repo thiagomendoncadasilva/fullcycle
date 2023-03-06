@@ -8,15 +8,14 @@ services:
       dockerfile: Dockerfile
     image: tmsdkr/node:latest      
     container_name: app
-    entrypoint: dockerize -wait tcp://db:3306 -timeout 60s docker-entrypoint.sh
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 40s docker-entrypoint.sh node index.js
     networks: 
       - nodenet
     volumes: 
-      - ./node:/usr/src/app
+      - /usr/src/app
     tty: true
     ports: 
       - "3000:3000"
-    command: node index.js      
     depends_on: 
        - db
 
@@ -52,4 +51,4 @@ services:
 networks: 
   nodenet:
     driver: bridge
-    name: nodenet      
+    name: nodenet
